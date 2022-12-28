@@ -1,0 +1,34 @@
+{
+  "name": "vite-plugin-ali-sourcemap",
+  "version": "1.0.0",
+  "description": "自动上传sourcemap文件到ARMS平台的vite插件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf ./dist && tsc",
+    "publish-project": "pnpm build && pnpm publish --access public"
+  },
+  "author": "@lichenxia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunny19990108/vite-plugin-ali-sourcemap"
+  },
+  "keywords": [
+    "sourcemap",
+    "ARMS",
+    "aliCloud",
+    "pnpm"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "@alicloud/arms20190808": "^1.0.1",
+    "@alicloud/openapi-client": "^0.4.1",
+    "@alicloud/tea-util": "^1.4.0"
+  },
+  "devDependencies": {
+    "vite": "^2.9.12",
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  }
+}

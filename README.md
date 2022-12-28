@@ -1,7 +1,7 @@
 # vite-plugin-ali-sourcemap
 
-auto upload source map to ali arms
-Base on https://next.api.aliyun.com/api/ARMS/2019-08-08/Upload?lang=TYPESCRIPT&params={}
+基于 https://next.api.aliyun.com/api/ARMS/2019-08-08/Upload?lang=TYPESCRIPT&params={}
+自动上传 sourcemap 到 阿里 ARMS
 
 通过 vite 的自带钩子 configResolved 获取到打包后的路径,
 在 closeBundle 钩子 自动遍历指定路径下的.map 文件， 并上传到阿里云 arms 的 source map 列表中
