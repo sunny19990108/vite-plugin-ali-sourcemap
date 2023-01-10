@@ -2,7 +2,7 @@
   "name": "vite-plugin-ali-sourcemap",
   "version": "1.0.5",
   "description": "自动上传sourcemap文件到ARMS平台的vite插件",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "pnpm -r run build",
