@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "pnpm -r run build",
-    "publish-project": "pnpm build && pnpm publish --access public"
+    "publish-project": "pnpm build && pnpm -C ./dist publish --access public"
   },
   "author": "@lichenxia",
   "repository": {

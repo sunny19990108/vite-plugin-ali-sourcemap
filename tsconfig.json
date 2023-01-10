@@ -3,7 +3,7 @@
     "target": "es2017",
     "module": "commonjs",
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "./dist",
     "esModuleInterop": true
   },
