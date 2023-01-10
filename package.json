@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-ali-sourcemap",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "自动上传sourcemap文件到ARMS平台的vite插件",
   "main": "dist/index.js",
   "scripts": {
