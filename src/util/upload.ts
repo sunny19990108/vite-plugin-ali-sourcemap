@@ -1,17 +1,18 @@
 import fs from "fs";
-import { readDir, readFile } from "./file";
+import { readDir, readFile, delFile } from "./file";
 import Client, { ClientConfigType, UploadDefaultConfigType } from "../client";
 export type ConfigType = {
   clientConfig: ClientConfigType;
   uploadDefaultConfig: UploadDefaultConfigType;
   maxRetryTimes?: number;
   disabled?: boolean;
+  deleteSourceFile?: boolean;
 };
 
 // 兜底， 最大重试次数
 let maxRetryTimesVal = 6;
 export default function (
-  { clientConfig, uploadDefaultConfig, maxRetryTimes, disabled }: ConfigType,
+  { clientConfig, uploadDefaultConfig, maxRetryTimes, disabled = false, deleteSourceFile = true }: ConfigType,
   outDirFinal: string
 ) {
   const { accessKeyId, accessKeySecret } = clientConfig;
@@ -31,7 +32,8 @@ export default function (
     maxRetryTimesVal = maxRetryTimes;
   }
   console.log("start time:", new Date().toISOString());
-  const allMapFiles = readDir(outDirFinal).filter((file) =>
+
+  const allMapFiles = readDir(outDirFinal)?.filter((file) =>
     file.endsWith(".map")
   );
   const uploadClient = new Client(clientConfig, uploadDefaultConfig);
@@ -77,6 +79,10 @@ export default function (
         setTimeout(() => {
           handleUpload(laterList, 0);
         }, 1000 * 5);
+      }).finally(() => {
+        if(deleteSourceFile) {
+          delFile(filePath);
+        }
       });
   };
 
