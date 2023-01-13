@@ -10,7 +10,7 @@ export type ConfigType = {
 };
 
 // 兜底， 最大重试次数
-let maxRetryTimesVal = 6;
+let maxRetryTimesVal = 3;
 export default function (
   { clientConfig, uploadDefaultConfig, maxRetryTimes, disabled = false, deleteSourceFile = true }: ConfigType,
   outDirFinal: string
@@ -67,10 +67,15 @@ export default function (
 
   const handleUpload = (fileList: string[], index: number) => {
     if (index > fileList.length - 1) return;
+
     const filePath = fileList[index];
-    const fileData = readFile(filePath);
     const pathArr = filePath.split("/");
     const fileName = pathArr[pathArr.length - 1];
+    if(fileName.includes('echart')) {
+      return;
+    }
+
+    const fileData = readFile(filePath);
     uploadClient
       .main({ fileName, file: fileData })
       .then(() => {

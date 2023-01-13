@@ -22,11 +22,11 @@ export function readDir(dirPath: string) {
   }
 }
 
-// 读文件
+// 读文件 File这个参数要传UTF-8格式编码的string字符串类型
 export function readFile(filePath: string): string | undefined {
   try {
-    const buff = fs.readFileSync(filePath);
-    return buff.toString();
+    const buff = fs.readFileSync(filePath, 'utf-8');
+    return buff;
   } catch (err) {
     console.log(err);
   }

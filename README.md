@@ -25,13 +25,13 @@ type UploadDefaultConfigType = {
 type ConfigType = {
   clientConfig: ClientConfigType;
   uploadDefaultConfig: UploadDefaultConfigType;
-  maxRetryTimes?: number; //上传失败后重试次数，默认六次
+  maxRetryTimes?: number; //上传失败后重试次数，默认三次
   disabled?: boolean; // 是否上传， 默认是
   deleteSourceFile?: boolean; // 上传后是否删除源文件，默认是
 };
 ```
 
-注意文件大小， 太大了传不上去， 要分包
+注意文件大小， 太大了传不上去， 要分包，经过实验 4.8M 的文件就过大了
 
 
 
