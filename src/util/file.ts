@@ -58,13 +58,14 @@ export function mkFileDir(outDirFinal, fileName) {
  * @param oldFilePath 要移动的文件原绝对路径
  * @param newFileDirName 新文件父文件夹名
  */
-export function transFile(outDirFinal, oldFilePath , fileName) {
+ export function transFile(outDirFinal, oldFilePath , newFileDirName) {
   const oldFileName = oldFilePath.split('/')[oldFilePath.split('/').length - 1];
-  const newPath = outDirFinal.split('dist')[0] + fileName + '/' + oldFileName;
+  const newPath = outDirFinal.split('dist')[0] + newFileDirName + '/' + oldFileName;
   fs.rename(oldFilePath, newPath, function(error){
     if(error){
       console.log(`移动${oldFileName}失败`, error);
       return false;
     }
   }) 
+  return newPath;
 }

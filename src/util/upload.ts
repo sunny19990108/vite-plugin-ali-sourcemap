@@ -1,5 +1,5 @@
 import fs from "fs";
-import { readDir, readFile, delFile } from "./file";
+import { readDir, readFile, delFile, mkFileDir, transFile } from "./file";
 import Client, { ClientConfigType, UploadDefaultConfigType } from "../client";
 export type ConfigType = {
   clientConfig: ClientConfigType;
@@ -33,9 +33,25 @@ export default function (
   }
   console.log("start time:", new Date().toISOString());
 
-  const allMapFiles = readDir(outDirFinal)?.filter((file) =>
+  let allMapFiles = readDir(outDirFinal)?.filter((file) =>
     file.endsWith(".map")
   );
+
+  console.log('allMapFiles', outDirFinal, allMapFiles?.length);
+  if(deleteSourceFile) {
+    mkFileDir(outDirFinal, 'sourcemap');
+    const newMapFiles: string[] = [];
+    allMapFiles?.forEach((item) => {
+      const path = transFile(outDirFinal, item , 'sourcemap');
+      if(path) {
+        newMapFiles.push(path);
+      }
+    })
+
+    allMapFiles = newMapFiles;
+    console.log('移动后文件', allMapFiles?.length , allMapFiles?.[0]);
+  }
+
   const uploadClient = new Client(clientConfig, uploadDefaultConfig);
   // allMapFiles.forEach(file => {
   //   const fileData = readFile(outDirFinal + "/" + file);
@@ -79,11 +95,7 @@ export default function (
         setTimeout(() => {
           handleUpload(laterList, 0);
         }, 1000 * 5);
-      }).finally(() => {
-        if(deleteSourceFile) {
-          delFile(filePath);
-        }
-      });
+      })
   };
 
   handleUpload(allMapFiles, 0);
