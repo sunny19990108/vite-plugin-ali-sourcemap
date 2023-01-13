@@ -37,7 +37,8 @@ export default function (
     file.endsWith(".map")
   );
 
-  console.log('allMapFiles', outDirFinal, allMapFiles?.length);
+  console.log("allMapFiles:", outDirFinal, allMapFiles?.length);
+
   if(deleteSourceFile) {
     mkFileDir(outDirFinal, 'sourcemap');
     const newMapFiles: string[] = [];
@@ -49,7 +50,7 @@ export default function (
     })
 
     allMapFiles = newMapFiles;
-    console.log('移动后文件', allMapFiles?.length , allMapFiles?.[0]);
+    console.log("移动后文件:", allMapFiles?.length , allMapFiles?.[0]);
   }
 
   const uploadClient = new Client(clientConfig, uploadDefaultConfig);
@@ -71,7 +72,9 @@ export default function (
     const filePath = fileList[index];
     const pathArr = filePath.split("/");
     const fileName = pathArr[pathArr.length - 1];
-    if(fileName.includes('echart')) {
+    console.log("fileName", fileName);
+    
+    if(fileName.includes('echarts')) {
       return;
     }
 

@@ -3,6 +3,7 @@ import fs from "fs";
 
 // 读文件夹
 export function readDir(dirPath: string) {
+  console.log('dirPath', dirPath);
   const fileList: string[] = [];
   const handleRead = (dirPathVal: string) => {
     fs.readdirSync(dirPathVal, { withFileTypes: true }).forEach((item) => {
@@ -16,6 +17,7 @@ export function readDir(dirPath: string) {
   };
   try {
     handleRead(dirPath);
+    console.log("fileList", fileList);
     return fileList;
   } catch (err) {
     console.log(err);
