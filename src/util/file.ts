@@ -36,7 +36,7 @@ export function readFile(filePath: string): string | undefined {
 
 // 删除文件
 export function delFile(file) {
-  fs.unlink(file,function(error){
+  fs.unlink(file, function(error){
     if(error){
         console.log(`删除文件${file}失败`, error);
         return false;
@@ -45,7 +45,7 @@ export function delFile(file) {
 }
 
 // 创建和 dist 同级的文件目录
-export function mkFileDir(outDirFinal, fileName) {
+export async function mkFileDir(outDirFinal, fileName) {
   fs.mkdir(outDirFinal.split('dist')[0] + fileName, function(error){
     if(error){
         console.log(' 创建和 dist 同级的文件目录失败', error);
@@ -60,7 +60,7 @@ export function mkFileDir(outDirFinal, fileName) {
  * @param oldFilePath 要移动的文件原绝对路径
  * @param newFileDirName 新文件父文件夹名
  */
- export function transFile(outDirFinal, oldFilePath , newFileDirName) {
+ export async function transFile(outDirFinal, oldFilePath , newFileDirName) {
   const oldFileName = oldFilePath.split('/')[oldFilePath.split('/').length - 1];
   const newPath = outDirFinal.split('dist')[0] + newFileDirName + '/' + oldFileName;
   fs.rename(oldFilePath, newPath, function(error){

@@ -7,12 +7,13 @@ export type ConfigType = {
   maxRetryTimes?: number;
   disabled?: boolean;
   deleteSourceFile?: boolean;
+  uploadPath?: string;
 };
 
 // 兜底， 最大重试次数
 let maxRetryTimesVal = 3;
-export default function (
-  { clientConfig, uploadDefaultConfig, maxRetryTimes, disabled = false, deleteSourceFile = true }: ConfigType,
+export default async function (
+  { clientConfig, uploadDefaultConfig, maxRetryTimes, disabled = false, deleteSourceFile = true, uploadPath = '' }: ConfigType,
   outDirFinal: string
 ) {
   const { accessKeyId, accessKeySecret } = clientConfig;
@@ -33,17 +34,18 @@ export default function (
   }
   console.log("start time:", new Date().toISOString());
 
-  let allMapFiles = readDir(outDirFinal)?.filter((file) =>
+  const uploadFilePath = outDirFinal+ '/' + uploadPath;
+  let allMapFiles = readDir(uploadFilePath)?.filter((file) =>
     file.endsWith(".map")
   );
 
-  console.log("allMapFiles:", outDirFinal, allMapFiles?.length);
+  console.log("allMapFiles:", uploadFilePath, allMapFiles?.length);
 
   if(deleteSourceFile) {
-    mkFileDir(outDirFinal, 'sourcemap');
+    await mkFileDir(outDirFinal, 'sourcemap');
     const newMapFiles: string[] = [];
-    allMapFiles?.forEach((item) => {
-      const path = transFile(outDirFinal, item , 'sourcemap');
+    await allMapFiles?.forEach(async (item) => {
+      const path = await transFile(outDirFinal, item , 'sourcemap');
       if(path) {
         newMapFiles.push(path);
       }
@@ -74,9 +76,13 @@ export default function (
     const fileName = pathArr[pathArr.length - 1];
     console.log("fileName", fileName);
     
-    if(fileName.includes('echarts')) {
-      return;
-    }
+    // if(fileName.includes('echarts')) {
+    //   if (index < fileList.length - 1) {
+    //     handleUpload(fileList, index + 1);
+    //   } else {
+    //     console.log("end time:", new Date().toISOString());
+    //   }
+    // }
 
     const fileData = readFile(filePath);
     uploadClient
