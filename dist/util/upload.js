@@ -59,14 +59,6 @@ async function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, dis
         const filePath = fileList[index];
         const pathArr = filePath.split("/");
         const fileName = pathArr[pathArr.length - 1];
-        console.log("fileName", fileName);
-        // if(fileName.includes('echarts')) {
-        //   if (index < fileList.length - 1) {
-        //     handleUpload(fileList, index + 1);
-        //   } else {
-        //     console.log("end time:", new Date().toISOString());
-        //   }
-        // }
         const fileData = (0, file_1.readFile)(filePath);
         uploadClient
             .main({ fileName, file: fileData })
@@ -95,6 +87,6 @@ async function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, dis
             }, 1000 * 5);
         });
     };
-    // handleUpload(allMapFiles, 0);
+    handleUpload(allMapFiles, 0);
 }
 exports.default = default_1;
