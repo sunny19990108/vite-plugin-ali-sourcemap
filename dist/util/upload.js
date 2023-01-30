@@ -28,11 +28,9 @@ async function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, dis
     }
     console.log("start time:", new Date().toISOString());
     const uploadFilePath = outDirFinal + '/' + uploadPath;
-    console.log('222', uploadFilePath, deleteSourceFile);
     let allMapFiles = await ((_a = (0, file_1.readDir)(uploadFilePath)) === null || _a === void 0 ? void 0 : _a.filter((file) => file.endsWith(".map")));
     console.log("allMapFiles:", uploadFilePath, allMapFiles === null || allMapFiles === void 0 ? void 0 : allMapFiles.length);
     if (deleteSourceFile) {
-        console.log('outDirFinal', outDirFinal);
         await (0, file_1.mkFileDir)(outDirFinal, 'sourcemap');
         const newMapFiles = [];
         await (allMapFiles === null || allMapFiles === void 0 ? void 0 : allMapFiles.forEach(async (item) => {

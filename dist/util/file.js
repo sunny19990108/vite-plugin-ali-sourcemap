@@ -7,11 +7,11 @@ exports.transFile = exports.mkFileDir = exports.delFile = exports.readFile = exp
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 // 读文件夹
-function readDir(dirPath) {
+async function readDir(dirPath) {
     console.log('dirPath', dirPath);
     const fileList = [];
-    const handleRead = (dirPathVal) => {
-        fs_1.default.readdirSync(dirPathVal, { withFileTypes: true }).forEach((item) => {
+    const handleRead = async (dirPathVal) => {
+        await fs_1.default.readdirSync(dirPathVal, { withFileTypes: true }).forEach((item) => {
             const filePath = path_1.default.join(dirPathVal, item.name);
             if (item.isFile()) {
                 fileList.push(filePath);
@@ -22,7 +22,7 @@ function readDir(dirPath) {
         });
     };
     try {
-        handleRead(dirPath);
+        await handleRead(dirPath);
         console.log("fileList", fileList);
         return fileList;
     }

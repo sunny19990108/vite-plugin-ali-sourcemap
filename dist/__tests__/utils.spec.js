@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const file_1 = require("../util/file");
 const path_1 = __importDefault(require("path"));
-function testReadDir() {
-    const fileList = (0, file_1.readDir)(path_1.default.resolve(__dirname, ".."));
+async function testReadDir() {
+    const fileList = await (0, file_1.readDir)(path_1.default.resolve(__dirname, ".."));
     if (fileList.includes(path_1.default.resolve(__dirname, "utils.spec.js")) &&
         fileList.includes(path_1.default.resolve(__dirname, "..", "client.js"))) {
         console.log("pass");

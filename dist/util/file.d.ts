@@ -1,4 +1,4 @@
-export declare function readDir(dirPath: string): string[];
+export declare function readDir(dirPath: string): Promise<string[]>;
 export declare function readFile(filePath: string): string | undefined;
 export declare function delFile(file: any): void;
 export declare function mkFileDir(outDirFinal: any, fileName: any): Promise<void>;

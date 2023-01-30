@@ -1,8 +1,8 @@
 import { readDir, readFile } from "../util/file";
 import path from "path";
 
-function testReadDir() {
-  const fileList = readDir(path.resolve(__dirname, ".."));
+async function testReadDir() {
+  const fileList = await readDir(path.resolve(__dirname, ".."));
   if (
     fileList.includes(path.resolve(__dirname, "utils.spec.js")) &&
     fileList.includes(path.resolve(__dirname, "..", "client.js"))

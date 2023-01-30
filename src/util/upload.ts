@@ -36,7 +36,7 @@ export default async function (
 
   const uploadFilePath = outDirFinal+ '/' + uploadPath;
   
-  let allMapFiles = await readDir(uploadFilePath)?.filter((file) =>
+  let allMapFiles = (await readDir(uploadFilePath))?.filter((file) =>
     file.endsWith(".map")
   );
 
