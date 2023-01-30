@@ -35,7 +35,9 @@ export default async function (
   console.log("start time:", new Date().toISOString());
 
   const uploadFilePath = outDirFinal+ '/' + uploadPath;
-  let allMapFiles = readDir(uploadFilePath)?.filter((file) =>
+  console.log('222', uploadFilePath, deleteSourceFile);
+  
+  let allMapFiles = await readDir(uploadFilePath)?.filter((file) =>
     file.endsWith(".map")
   );
 
@@ -113,5 +115,5 @@ export default async function (
       })
   };
 
-  handleUpload(allMapFiles, 0);
+  // handleUpload(allMapFiles, 0);
 }
