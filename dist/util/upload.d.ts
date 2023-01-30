@@ -4,5 +4,7 @@ export type ConfigType = {
     uploadDefaultConfig: UploadDefaultConfigType;
     maxRetryTimes?: number;
     disabled?: boolean;
+    deleteSourceFile?: boolean;
+    uploadPath?: string;
 };
-export default function ({ clientConfig, uploadDefaultConfig, maxRetryTimes, disabled }: ConfigType, outDirFinal: string): void;
+export default function ({ clientConfig, uploadDefaultConfig, maxRetryTimes, disabled, deleteSourceFile, uploadPath }: ConfigType, outDirFinal: string): Promise<void>;

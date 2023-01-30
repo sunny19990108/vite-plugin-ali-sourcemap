@@ -22,4 +22,3 @@ function pluginConfig(config) {
     };
 }
 exports.default = pluginConfig;
-//# sourceMappingURL=index.js.map

@@ -35,7 +35,6 @@ export default async function (
   console.log("start time:", new Date().toISOString());
 
   const uploadFilePath = outDirFinal+ '/' + uploadPath;
-  console.log('222', uploadFilePath, deleteSourceFile);
   
   let allMapFiles = await readDir(uploadFilePath)?.filter((file) =>
     file.endsWith(".map")
@@ -44,7 +43,6 @@ export default async function (
   console.log("allMapFiles:", uploadFilePath, allMapFiles?.length);
 
   if(deleteSourceFile) {
-    console.log('outDirFinal', outDirFinal);
     await mkFileDir(outDirFinal, 'sourcemap');
     const newMapFiles: string[] = [];
     await allMapFiles?.forEach(async (item) => {

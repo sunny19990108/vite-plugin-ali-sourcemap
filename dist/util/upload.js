@@ -7,8 +7,9 @@ const fs_1 = __importDefault(require("fs"));
 const file_1 = require("./file");
 const client_1 = __importDefault(require("../client"));
 // 兜底， 最大重试次数
-let maxRetryTimesVal = 6;
-function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, disabled }, outDirFinal) {
+let maxRetryTimesVal = 3;
+async function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, disabled = false, deleteSourceFile = true, uploadPath = '' }, outDirFinal) {
+    var _a;
     const { accessKeyId, accessKeySecret } = clientConfig;
     const { pid } = uploadDefaultConfig;
     if (!accessKeyId || !accessKeySecret || !pid) {
@@ -26,7 +27,23 @@ function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, disabled 
         maxRetryTimesVal = maxRetryTimes;
     }
     console.log("start time:", new Date().toISOString());
-    const allMapFiles = (0, file_1.readDir)(outDirFinal).filter((file) => file.endsWith(".map"));
+    const uploadFilePath = outDirFinal + '/' + uploadPath;
+    console.log('222', uploadFilePath, deleteSourceFile);
+    let allMapFiles = await ((_a = (0, file_1.readDir)(uploadFilePath)) === null || _a === void 0 ? void 0 : _a.filter((file) => file.endsWith(".map")));
+    console.log("allMapFiles:", uploadFilePath, allMapFiles === null || allMapFiles === void 0 ? void 0 : allMapFiles.length);
+    if (deleteSourceFile) {
+        console.log('outDirFinal', outDirFinal);
+        await (0, file_1.mkFileDir)(outDirFinal, 'sourcemap');
+        const newMapFiles = [];
+        await (allMapFiles === null || allMapFiles === void 0 ? void 0 : allMapFiles.forEach(async (item) => {
+            const path = await (0, file_1.transFile)(outDirFinal, item, 'sourcemap');
+            if (path) {
+                newMapFiles.push(path);
+            }
+        }));
+        allMapFiles = newMapFiles;
+        console.log("移动后文件:", allMapFiles === null || allMapFiles === void 0 ? void 0 : allMapFiles.length, allMapFiles === null || allMapFiles === void 0 ? void 0 : allMapFiles[0]);
+    }
     const uploadClient = new client_1.default(clientConfig, uploadDefaultConfig);
     // allMapFiles.forEach(file => {
     //   const fileData = readFile(outDirFinal + "/" + file);
@@ -42,9 +59,17 @@ function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, disabled 
         if (index > fileList.length - 1)
             return;
         const filePath = fileList[index];
-        const fileData = (0, file_1.readFile)(filePath);
         const pathArr = filePath.split("/");
         const fileName = pathArr[pathArr.length - 1];
+        console.log("fileName", fileName);
+        // if(fileName.includes('echarts')) {
+        //   if (index < fileList.length - 1) {
+        //     handleUpload(fileList, index + 1);
+        //   } else {
+        //     console.log("end time:", new Date().toISOString());
+        //   }
+        // }
+        const fileData = (0, file_1.readFile)(filePath);
         uploadClient
             .main({ fileName, file: fileData })
             .then(() => {
@@ -72,7 +97,6 @@ function default_1({ clientConfig, uploadDefaultConfig, maxRetryTimes, disabled 
             }, 1000 * 5);
         });
     };
-    handleUpload(allMapFiles, 0);
+    // handleUpload(allMapFiles, 0);
 }
 exports.default = default_1;
-//# sourceMappingURL=upload.js.map

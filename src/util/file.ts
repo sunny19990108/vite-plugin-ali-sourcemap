@@ -2,11 +2,11 @@ import path from "path";
 import fs from "fs";
 
 // 读文件夹
-export function readDir(dirPath: string) {
+export async function readDir(dirPath: string) {
   console.log('dirPath', dirPath);
   const fileList: string[] = [];
-  const handleRead = (dirPathVal: string) => {
-    fs.readdirSync(dirPathVal, { withFileTypes: true }).forEach((item) => {
+  const handleRead = async (dirPathVal: string) => {
+    await fs.readdirSync(dirPathVal, { withFileTypes: true }).forEach((item) => {
       const filePath = path.join(dirPathVal, item.name);
       if (item.isFile()) {
         fileList.push(filePath);
@@ -16,7 +16,7 @@ export function readDir(dirPath: string) {
     });
   };
   try {
-    handleRead(dirPath);
+    await handleRead(dirPath);
     console.log("fileList", fileList);
     return fileList;
   } catch (err) {

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpm -r run build",
+    "build": "rm -rf ./dist && tsc",
     "publish-project": "pnpm build && pnpm publish --access public"
   },
   "author": "@lichenxia",
