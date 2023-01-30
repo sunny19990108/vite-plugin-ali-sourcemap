@@ -75,15 +75,6 @@ export default async function (
     const filePath = fileList[index];
     const pathArr = filePath.split("/");
     const fileName = pathArr[pathArr.length - 1];
-    console.log("fileName", fileName);
-    
-    // if(fileName.includes('echarts')) {
-    //   if (index < fileList.length - 1) {
-    //     handleUpload(fileList, index + 1);
-    //   } else {
-    //     console.log("end time:", new Date().toISOString());
-    //   }
-    // }
 
     const fileData = readFile(filePath);
     uploadClient
@@ -113,5 +104,5 @@ export default async function (
       })
   };
 
-  // handleUpload(allMapFiles, 0);
+  handleUpload(allMapFiles, 0);
 }
