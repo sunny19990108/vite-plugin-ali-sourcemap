@@ -42,6 +42,7 @@ export default async function (
   console.log("allMapFiles:", uploadFilePath, allMapFiles?.length);
 
   if(deleteSourceFile) {
+    console.log('outDirFinal', outDirFinal);
     await mkFileDir(outDirFinal, 'sourcemap');
     const newMapFiles: string[] = [];
     await allMapFiles?.forEach(async (item) => {
